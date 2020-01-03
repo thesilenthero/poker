@@ -45,8 +45,8 @@ def rank_hand(*cards):
     # print(suited)
 
     if len(hand_combins) == 1 & len(suited) == 1:
-        result = hands_table[(hands_table.objects.apply(lambda row: list(row) == hand_combins[0])) & (hands_table.Flush == suited[0])]
+        result = hands_table[(hands_table['objects'].apply(lambda row: list(row) == hand_combins[0])) & (hands_table['Flush'] == suited[0])]
     else:
-        result = hands_table[hands_table.objects.isin(hand_combins) & hands_table.Flush.isin(suited)]
+        result = hands_table[hands_table['objects'].apply(sorted).isin(hand_combins) & hands_table['Flush'].isin(suited)]
 
     return result.reset_index()[['descr', 'rank', 'sample_hand', 'abbrev', 'Flush']].iloc[0, :].to_dict()
